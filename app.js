@@ -17,7 +17,12 @@ app.use(methodOverride('_method'))
 
 // 進入首頁
 app.get('/', (req, res) => {
-  res.send('Hello world!')
+  return Todo.findAll({
+    raw: true,
+    nest: true
+  })
+    .then((todos) => { return res.render('index', { todos: todos }) })
+    .catch((error) => { return res.status(422).json(error) })
 })
 // 進入登入頁
 app.get('/users/login', (req, res) => {
