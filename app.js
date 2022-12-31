@@ -46,6 +46,13 @@ app.post('/users/register', (req, res) => {
   User.create({ name, email, password })
     .then(user => res.redirect('/'))
 })
+// 查詢todo
+app.get('/todos/:id', (req, res) => {
+  const id = req.params.id
+  return Todo.findByPk(id)
+    .then(todo => res.render('detail', { todo: todo.toJSON() }))
+    .catch(error => console.log(error))
+})
 
 app.listen(PORT, () => {
   console.log(`App is running on http://localhost:${PORT}`)
