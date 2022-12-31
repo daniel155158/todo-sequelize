@@ -3,6 +3,9 @@ const exphbs = require('express-handlebars')
 const methodOverride = require('method-override')
 const bcrypt = require('bcryptjs')
 const app = express()
+const db = require('./models')
+const Todo = db.Todo
+const User = db.User
 const PORT = 3000
 
 // template engine
@@ -34,7 +37,9 @@ app.get('/users/register', (req, res) => {
 })
 // 提交註冊資訊
 app.post('/users/register', (req, res) => {
-  res.send('Register ok!')
+  const { name, email, password, confirmPassword } = req.body
+  User.create({ name, email, password })
+    .then(user => res.redirect('/'))
 })
 
 app.listen(PORT, () => {
