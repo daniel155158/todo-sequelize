@@ -6,6 +6,7 @@ const db = require('../models')
 const User = db.User
 
 module.exports = app => {
+  // 初始化 Passport 模組
   app.use(passport.initialize())
   app.use(passport.session())
   // 設定本地登入策略

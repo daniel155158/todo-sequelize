@@ -1,17 +1,12 @@
 const express = require('express')
 const exphbs = require('express-handlebars')
 const methodOverride = require('method-override')
-const bcrypt = require('bcryptjs')
 const session = require('express-session')
-const passport = require('passport')
 const flash = require('connect-flash')
 
-const app = express()
-const db = require('./models')
-const Todo = db.Todo
-const User = db.User
 const usePassport = require('./config/passport')
 const routes = require('./routes')
+const app = express()
 
 // 非正式環境下使用
 if (process.env.NODE_ENV !== 'production') {
