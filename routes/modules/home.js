@@ -3,7 +3,6 @@ const router = express.Router()
 const db = require('../../models')
 const Todo = db.Todo
 
-
 // 進入首頁
 router.get('/', (req, res) => {
   const UserId = req.user.id
