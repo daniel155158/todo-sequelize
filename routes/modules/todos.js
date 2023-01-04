@@ -44,5 +44,16 @@ router.put('/:id', (req, res) => {
     .then(() => { res.redirect(`/todos/${id}`) })
     .catch(error => console.log(error))
 })
+// 刪除一筆todo
+router.delete('/:id', (req, res) => {
+  const id = req.params.id
+  return Todo.destroy({
+    where: {
+      id: id
+    }
+  })
+    .then(() => res.redirect('/'))
+    .catch(error => console.log(error))
+})
 
 module.exports = router
