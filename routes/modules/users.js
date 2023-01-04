@@ -16,7 +16,8 @@ router.post('/login', passport.authenticate('local', {
 }))
 // 登出
 router.get('/logout', (req, res) => {
-  res.send('Logout ok!')
+  req.logout()
+  res.redirect('/users/login')
 })
 // 進入註冊頁
 router.get('/register', (req, res) => {
