@@ -12,14 +12,19 @@ const Todo = db.Todo
 const User = db.User
 const usePassport = require('./config/passport')
 const routes = require('./routes')
-const PORT = 3000
+
+// 非正式環境下使用
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config()
+}
+const PORT = process.env.PORT
 
 // template engine
 app.engine('hbs', exphbs({ defaultLayout: 'main', extname: 'hbs' }))
 app.set('view engine', 'hbs')
 // middleware
 app.use(session({
-  secret: 'ThisIsMySecret',
+  secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: true
 }))
