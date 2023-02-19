@@ -17,41 +17,40 @@ router.post('/', (req, res) => {
 })
 // 查詢todo
 router.get('/:id', (req, res) => {
+  const UserId = req.user.id
   const id = req.params.id
-  return Todo.findByPk(id)
+  return Todo.findOne({ where: { id, UserId } })
     .then(todo => res.render('detail', { todo: todo.toJSON() }))
     .catch(error => console.log(error))
 })
 // 進入edit頁面
 router.get('/:id/edit', (req, res) => {
+  const UserId = req.user.id
   const id = req.params.id
-  return Todo.findByPk(id)
+  return Todo.findOne({ where: { id, UserId } })
     .then(todo => res.render('edit', { todo: todo.toJSON() }))
     .catch(error => console.log(error))
 })
 // 修改一筆todo
 router.put('/:id', (req, res) => {
+  const UserId = req.user.id
   const id = req.params.id
   const { name, isDone } = req.body
-  return Todo.update({
-    name: name,
-    isDone: isDone === 'on'
-  }, {
-    where: {
-      id: id
-    }
-  })
+  return Todo.findOne({ where: { id, UserId } })
+    .then(todo => {
+      todo.name = name
+      todo.isDone = isDone === 'on'
+      return todo.save()
+    })
     .then(() => { res.redirect(`/todos/${id}`) })
     .catch(error => console.log(error))
 })
 // 刪除一筆todo
 router.delete('/:id', (req, res) => {
+  const UserId = req.user.id
   const id = req.params.id
-  return Todo.destroy({
-    where: {
-      id: id
-    }
-  })
+  return Todo.findOne({ where: { id, UserId } })
+    .then(todo => todo.destroy())
     .then(() => res.redirect('/'))
     .catch(error => console.log(error))
 })
